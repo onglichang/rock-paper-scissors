@@ -10,6 +10,7 @@ function computerPlay() {
     return options[randomChoice];
 }
 
+// Test statement for computerPlay function
 //console.log(computerPlay());
 
 function singleRound(playerSelection, computerSelection) {
@@ -62,7 +63,58 @@ function singleRound(playerSelection, computerSelection) {
     
 }
 
-
+//Test Statements for singleRound function
 let comChoice = computerPlay();
 console.log(comChoice);
 console.log(singleRound('PAPER', comChoice));
+
+function game() {
+    // Alert the user that game has commenced
+    alert("Game started, 5 rounds of Rock Paper Scissors commencing...");
+
+    // Predeclare a variable to store player's choice
+    let playerChoice;
+    // Predeclare a variable to store score
+    let score = 0;
+    // Predeclare a variable to store current round results;
+    let result;
+
+    // Start the for loop for 5 rounds
+    for (let i=0; i < 5; i++) {
+        // Prompt user for input
+        playerChoice = prompt("Please enter your move: ");
+        console.log(playerChoice);
+        // Call the singleRound function 
+        result = singleRound(playerChoice, computerPlay());
+        // If user enters invalid input, reprompt them and remind them of valid options
+        while (result == "Invalid input, try again") {
+            playerChoice = prompt("Please enter a valid move (Rock, Paper or Scissors): ");
+            result = singleRound(playerChoice, computerPlay());
+        }
+
+        // Announce result of round
+        alert("Round " + (i+1) + ": " + result);
+
+        // Slice off front portion of result to make comparison easy and redeclare result
+        result = result.slice(0, 9);
+
+        // Determine if player won and if so add 1 to current score
+        if (result == "You Win!") {
+            score += 1;
+        } 
+        
+        // Display current score
+        alert("Current score is: " + score);
+    }
+
+    // Determine game winner
+    if (score > 2) {
+        result = "You won! Congratulations";
+    } else {
+        result = "You lost, n00b!"
+    }
+    // Declare game winner
+    return result;
+}
+
+alert(game());
