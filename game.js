@@ -1,3 +1,19 @@
+// when page is first loaded, 0 points have been scored by either user or com
+let userScore = 0;
+let comScore = 0; 
+let roundCounter = 0;
+
+// to commence game, add an Event Listener for buttons
+const options = document.querySelectorAll('.option');
+options.forEach(option => option.addEventListener('click', playRound));
+
+function playRound(event) {
+    let userSelection = event.target.getAttribute("data-key");
+    let roundResult = singleRound(userSelection, computerPlay());
+    
+    scoreCounter(roundResult);
+}
+
 function computerPlay() {
     // To simulate a computer opponent, randomly return either 'Rock', 'Paper', 'Scissors'
     
@@ -10,8 +26,46 @@ function computerPlay() {
     return options[randomChoice];
 }
 
-// Test statement for computerPlay function
-//console.log(computerPlay());
+function scoreCounter(result) {
+    let realResult = result.slice(0, 8);
+    
+    roundCounter += 1;
+    // Determine if player won and if so add 1 to current score
+    if (realResult == "You Win!") {
+        userScore += 1;
+    } else if (realResult == "You Lose") {
+        comScore += 1;
+    }
+        
+    // Display current score on DOM
+    roundEval(result);
+}
+
+function roundEval(result) {
+    console.log(typeof userScore);
+    if (userScore == 5) {
+        document.getElementById("round-number").textContent = "Winner Winner Chicken Dinner!!!";
+        document.getElementById("round-result").textContent = ""
+        document.getElementById("tallied-score").textContent = ""; 
+        document.getElementById("opp-score").textContent = ""; 
+        userScore = 0;
+        comScore = 0;
+        roundCounter = 0;
+    } else if (comScore == 5) {
+        document.getElementById("round-number").textContent = "You lost, get g00d n00b :)";
+        document.getElementById("round-result").textContent = ""
+        document.getElementById("tallied-score").textContent = ""; 
+        document.getElementById("opp-score").textContent = ""; 
+        userScore = 0;
+        comScore = 0;
+        roundCounter = 0;
+    } else {
+        document.getElementById("round-number").textContent = "Round Number: " + roundCounter;
+        document.getElementById("round-result").textContent = result;
+        document.getElementById("tallied-score").textContent = "Your current score is: " + userScore; 
+        document.getElementById("opp-score").textContent = "Opponent's score is: " + comScore; 
+    }
+}
 
 function singleRound(playerSelection, computerSelection) {
     // Determines which of the two selection has won the rock paper scissors round 
@@ -62,59 +116,3 @@ function singleRound(playerSelection, computerSelection) {
     return declaration;
     
 }
-
-//Test Statements for singleRound function
-let comChoice = computerPlay();
-console.log(comChoice);
-console.log(singleRound('PAPER', comChoice));
-
-function game() {
-    // Alert the user that game has commenced
-    alert("Game started, 5 rounds of Rock Paper Scissors commencing...");
-
-    // Predeclare a variable to store player's choice
-    let playerChoice;
-    // Predeclare a variable to store score
-    let score = 0;
-    // Predeclare a variable to store current round results;
-    let result;
-
-    // Start the for loop for 5 rounds
-    for (let i=0; i < 5; i++) {
-        // Prompt user for input
-        playerChoice = prompt("Please enter your move: ");
-        console.log(playerChoice);
-        // Call the singleRound function 
-        result = singleRound(playerChoice, computerPlay());
-        // If user enters invalid input, reprompt them and remind them of valid options
-        while (result == "Invalid input, try again") {
-            playerChoice = prompt("Please enter a valid move (Rock, Paper or Scissors): ");
-            result = singleRound(playerChoice, computerPlay());
-        }
-
-        // Announce result of round
-        alert("Round " + (i+1) + ": " + result);
-
-        // Slice off front portion of result to make comparison easy and redeclare result
-        result = result.slice(0, 9);
-
-        // Determine if player won and if so add 1 to current score
-        if (result == "You Win!") {
-            score += 1;
-        } 
-        
-        // Display current score
-        alert("Current score is: " + score);
-    }
-
-    // Determine game winner
-    if (score > 2) {
-        result = "You won! Congratulations";
-    } else {
-        result = "You lost, n00b!"
-    }
-    // Declare game winner
-    return result;
-}
-
-//alert(game());

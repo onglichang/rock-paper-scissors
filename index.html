@@ -5,25 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock-Paper-Scissors</title>
-    <script src="game.js"></script>
+    <script src="game.js" defer></script>
 
 </head>
 <body>
-    <h1>Rock Paper Scissors</h1>
+    <div>
+        <h1>Rock Paper Scissors</h1>
+        <p>Please select an option to commence round. To be declared the winner, you need to win 5 rounds</p>
+    </div>
 
     <div class='button-div'>
-        <h3>Player's Options</h2>
+        <h3>Options</h3>
         <!-- When users select one of the options below, start a round and 
             submit their selection vs random computer results
         -->
-        <button>Rock</button>
-        <button>Paper</button>
-        <button>Scissors</button>
+        <!-- For each button we want to pass unique information to the query selector for id-->
+        <button data-key="Rock" class="option">Rock</button>
+        <button data-key="Paper" class="option">Paper</button>
+        <button data-key="Scissors" class="option">Scissors</button>
     </div>
 
-    <div>
+    <div class='result-div'>
         <!-- Display round results and tally -->
         <h3>Results:</h3>
+        <h5 id="round-number"></h5>
+        <p id="round-result"></p>
+        <p id="tallied-score"></p>
+        <p id="opp-score"></p>
     </div>
 
 </body>
