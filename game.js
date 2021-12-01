@@ -117,4 +117,4 @@ function game() {
     return result;
 }
 
-alert(game());
+//alert(game());
